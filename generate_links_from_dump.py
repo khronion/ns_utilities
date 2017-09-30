@@ -1,3 +1,19 @@
+# This file is part of Endorsement Graph.
+# Copyright 2017 Khronion <khronion@gmail.com>
+#
+# Endorsement Graph is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Endorsement Graph is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Endorsement Graph.  If not, see <http://www.gnu.org/licenses/>.
+
 import gzip
 import xml.etree.cElementTree as eTree
 
@@ -6,11 +22,12 @@ import xml.etree.cElementTree as eTree
 target = "europe"
 nation_dump = "nations.xml.gz"
 
-# End Configuaration ---------
+# End Configuration ---------
 
 
 def fix(s):
     return s.lower().replace(" ", "_")
+
 
 # get list of nations
 with gzip.open(nation_dump) as nation_dump:

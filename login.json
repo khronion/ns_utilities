@@ -1,0 +1,8 @@
+{
+    "encrypted": false,
+    "user_agent": "Your email or other identifier goes here",
+    "nations": {
+        "nation one": "password one",
+        "nation two": "password two"
+    }
+}

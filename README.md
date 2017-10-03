@@ -24,7 +24,7 @@ Configuration is handled by `login.json`, which has the following format:
 ```json
 {
     "encrypted": false,
-    "user_agent": "khronion@gmail.com",
+    "user_agent": "your email here",
     "nations": {
         "nation name 1": "password 1",
         "nation name 2": "password 2"

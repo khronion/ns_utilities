@@ -32,7 +32,7 @@ Configuration is handled by `login.json`, which has the following format:
 }
 ``` 
 
-After the first run, `login.py` will replace plain-text passwords in the configuration file with authentication hashes provided by the NationStates API. This will not occur if any nation fails to login with the supplied password.
+After the first run, `login.py` will ask to replace plain-text passwords in the configuration file with authentication hashes provided by the NationStates API. This will not occur if any nation fails to login with the supplied password.
 
 # Manual Recruitment
 

@@ -52,7 +52,8 @@ for nation in config['nations']:
 
 # dump file
 if not config['encrypted'] and not errors:
-    print("Encrypting passwords in configuration file.")
-    config['encrypted'] = True
-    with open('login.json', 'w') as out:
-        json.dump(config, out, indent=4)
+    if fix(input("Do you want to encrypt the configuration file?")) == 'y':
+        print("Encrypting passwords in configuration file.")
+        config['encrypted'] = True
+        with open('login.json', 'w') as out:
+            json.dump(config, out, indent=4)

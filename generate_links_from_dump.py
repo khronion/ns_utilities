@@ -19,7 +19,7 @@ import xml.etree.cElementTree as eTree
 
 # Configuration --------------
 
-target = "europe"
+target = "TARGET REGION"
 nation_dump = "nations.xml.gz"
 
 # End Configuration ---------

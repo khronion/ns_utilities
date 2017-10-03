@@ -21,9 +21,9 @@ import math
 
 # Configuration
 
-region = "Kingdom of Alexandria"
-user_agent = "Khronion <khronion@gmail.com>"
-rate = 40 / 30
+region = "Target Region Here"
+user_agent = "Nation Name <Email Address>"
+rate = 40 / 30  # Do not exceed 50 / 30
 
 # End Configuaration
 

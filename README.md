@@ -1,4 +1,4 @@
-This is a repository for various one-off NationStates related python scripts. All tools are provided as-is under a GPLv3 license.
+This is a repository for various one-off NationStates related python scripts. All scripts are written in Python 3 and are provided as-is under a GPLv3 license.
 
 # Endorsement Graph
 

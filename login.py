@@ -23,37 +23,60 @@ import urllib.error
 def fix(s):
     return s.lower().replace(" ", "_")
 
-with open('login.json', 'r') as config:
-    config = json.load(config)
+try:
+    with open('login.json', 'r') as config:
+        config = json.load(config)
+except json.decoder.JSONDecodeError:
+    print("login.json is malformed.")
+    exit(1)
 
 query = "https://www.nationstates.net/cgi-bin/api.cgi?nation={}&q=ping"
 errors = False
 
+# log into nations with plaintext passwords and store hashes
+hashes = {}
 for nation in config['nations']:
     print("Logging in to " + fix(nation))
-    # prepare headers
-    if config['encrypted']:
-        api_call = urllib.request.Request(url=query.format(fix(nation)),
-                                          headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
-                                                   'X-Autologin': config['nations'][nation]})
-    else:
-        api_call = urllib.request.Request(url=query.format(fix(nation)),
-                                          headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
-                                                   'X-Password': config['nations'][nation]})
 
-    # log into nations
+    # prepare header
+    api_call = urllib.request.Request(url=query.format(fix(nation)),
+                                      headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
+                                               'X-Password': config['nations'][nation]})
+
+    # log into nation
     try:
         with urllib.request.urlopen(api_call) as response:
-            config['nations'][nation] = response.info()['X-autologin']
+            hashes[nation] = response.info()['X-autologin']  # store hash
     except urllib.error.HTTPError:
         print("Failed to login to " + fix(nation) + ". Did you provide the correct password?")
-        errors = True  # flag for login errors, skip encryption stage
+    time.sleep(1)
+
+# log into nations with password hashes
+for nation in config['encrypted']:
+    print("Logging in to " + fix(nation))
+
+    # prepare header
+    api_call = urllib.request.Request(url=query.format(fix(nation)),
+                                      headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
+                                               'X-Autologin': config['encrypted'][nation]})
+
+    # log into nation
+    try:
+        with urllib.request.urlopen(api_call) as response:
+            config['encrypted'][nation] = response.info()['X-autologin']
+    except urllib.error.HTTPError:
+        print("Failed to login to " + fix(nation) + ". If you have changed its password, please re-add to login.json "
+                                                    "as a new nation.")
     time.sleep(1)
 
 # dump file
-if not config['encrypted'] and not errors:
-    if fix(input("Do you want to encrypt the configuration file?")) == 'y':
-        print("Encrypting passwords in configuration file.")
-        config['encrypted'] = True
-        with open('login.json', 'w') as out:
-            json.dump(config, out, indent=4)
+if len(config['nations']) > 0 and fix(input("Do you want to encrypt the configuration file? (y/n) ")) == 'y':
+    print("Encrypting passwords in configuration file.")
+
+    # store encrypted hash and delete plain-text hash
+    for nation in hashes:
+        del config['nations'][nation]
+        config['encrypted'][nation] = hashes[nation]
+
+    with open('login.json', 'w') as out:
+        json.dump(config, out, indent=4)

@@ -23,16 +23,19 @@ Configuration is handled by `login.json`, which has the following format:
 
 ```json
 {
-    "encrypted": false,
-    "user_agent": "your email here",
+    "user_agent": "Your email or other identifier goes here",
     "nations": {
-        "nation name 1": "password 1",
-        "nation name 2": "password 2"
+        "nation one": "password one",
+        "nation two": "password two"
+    },
+    "encrypted": {
+        "nation three": "hash goes here",
+        "nation four": "hash goes here"
     }
 }
 ``` 
 
-After the first run, `login.py` will ask to replace plain-text passwords in the configuration file with authentication hashes provided by the NationStates API. This will not occur if any nation fails to login with the supplied password.
+After a successful run with no login errors, `login.py` will offer to replace plain-text passwords in the configuration file with authentication hashes provided by the NationStates API. If you need to add additional nations later, add them under "nations" using the same format as above.
 
 # Manual Recruitment
 

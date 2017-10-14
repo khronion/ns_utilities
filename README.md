@@ -44,3 +44,25 @@ After a successful run with no login errors, `login.py` will offer to replace pl
 Generates a text file of newly founded/refounded nations, 8 to a line and comma-separated for easy use when manually recruiting. The script uses the API to verify each nation has not blocked recruitment telegrams before adding them to its list.
 
 Configuration options can be found inside the script itself.
+
+# RegionDict
+
+`RegionDict.py`
+
+Converts a region daily dump file into an `OrderedDict`-like object for easy use. `RegionDict` objects can be treated like other dictionary-like objects. Individual regions are keyed to their names (all lowercase, underscores instead of spaces). 
+
+All shards included in the daily dump can be accessed as attributes of their individual dictionary item. Shard names are in lowercase, unlike the daily dump XML.
+
+Example use:
+
+```python
+import RegionDict
+regions = RegionDict.RegionDict()
+
+for region in regions:
+    print(region.name + ", " + region.numnations + " nations.")
+```
+
+This will print every single region in the game and their populations.
+
+RegionDict is flexible enough to automatically include new shards as they are included in the daily dump, but will not properly handle numerical types until updated to specifically accommodate those shards.

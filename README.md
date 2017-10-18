@@ -45,24 +45,25 @@ Generates a text file of newly founded/refounded nations, 8 to a line and comma-
 
 Configuration options can be found inside the script itself.
 
-# RegionDict
+# NSDict
 
-`RegionDict.py`
+`NSDict.py`
 
-Converts a region daily dump file into an `OrderedDict`-like object for easy use. `RegionDict` objects can be treated like other dictionary-like objects. Individual regions are keyed to their names (all lowercase, underscores instead of spaces). 
+Converts a API dump file into an `OrderedDict`-like object for easy use. 
+- `EntityDict` extends `OrderedDict` and uses `cElementTree` to generate a dictionary from an XML string or file.
+- `RegionDict` extends `EntityDict` to parse region API queries and dumps
+- `NationDict` extends `EntityDict` to parse nation API queries and dumps
 
-All shards included in the daily dump can be accessed as attributes of their individual dictionary item. Shard names are in lowercase, unlike the daily dump XML.
+Individual shards can be accessed through dot notation or dictionary access. Entity names (e.g., regions and nations) and shards are in lowercase.
+
 
 Example use:
 
 ```python
-import RegionDict
-regions = RegionDict.RegionDict()
-
+import NSDict
+regions = NSDict.RegionDict('regions.xml.gz')
 for region in regions:
     print(region.name + ", " + region.numnations + " nations.")
 ```
 
 This will print every single region in the game and their populations.
-
-RegionDict is flexible enough to automatically include new shards as they are included in the daily dump, but will not properly handle numerical types until updated to specifically accommodate those shards.

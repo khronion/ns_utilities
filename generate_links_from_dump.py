@@ -19,7 +19,7 @@ import xml.etree.cElementTree as eTree
 
 # Configuration --------------
 
-target = "TARGET REGION"
+target = "NATION GOES HERE"
 nation_dump = "nations.xml.gz"
 
 # End Configuration ---------
@@ -50,8 +50,8 @@ with gzip.open(nation_dump) as nation_dump:
             try:
                 endorsement_list = nation.find("ENDORSEMENTS").text.split(",")
                 for endorsement in endorsement_list:
-                    endorsements.append([fix(nation.find("NAME").text), fix(endorsement)])
-                    print("\t{} endorsing {}".format(fix(nation.find("NAME").text), fix(endorsement)))
+                    endorsements.append([fix(endorsement), fix(nation.find("NAME").text)])
+                    print("\t{} endorsing {}".format(fix(endorsement), fix(nation.find("NAME").text)))
 
             except AttributeError:
                 pass  # no endorsements, skip

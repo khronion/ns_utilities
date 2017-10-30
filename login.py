@@ -23,12 +23,9 @@ import urllib.error
 def fix(s):
     return s.lower().replace(" ", "_")
 
-try:
-    with open('login.json', 'r') as config:
-        config = json.load(config)
-except json.decoder.JSONDecodeError:
-    print("login.json is malformed.")
-    exit(1)
+
+with open('login.json', 'r') as cfg:
+    config = json.load(cfg)
 
 query = "https://www.nationstates.net/cgi-bin/api.cgi?nation={}&q=ping"
 errors = False
@@ -52,22 +49,25 @@ for nation in config['nations']:
     time.sleep(1)
 
 # log into nations with password hashes
-for nation in config['encrypted']:
-    print("Logging in to " + fix(nation))
+try:
+    for nation in config['encrypted']:
+        print("Logging in to " + fix(nation))
 
-    # prepare header
-    api_call = urllib.request.Request(url=query.format(fix(nation)),
-                                      headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
-                                               'X-Autologin': config['encrypted'][nation]})
+        # prepare header
+        api_call = urllib.request.Request(url=query.format(fix(nation)),
+                                          headers={'User-Agent': 'login.py in use by ' + config['user_agent'],
+                                                   'X-Autologin': config['encrypted'][nation]})
 
-    # log into nation
-    try:
-        with urllib.request.urlopen(api_call) as response:
-            config['encrypted'][nation] = response.info()['X-autologin']
-    except urllib.error.HTTPError:
-        print("Failed to login to " + fix(nation) + ". If you have changed its password, please re-add to login.json "
-                                                    "as a new nation.")
-    time.sleep(1)
+        # log into nation
+        try:
+            with urllib.request.urlopen(api_call) as response:
+                config['encrypted'][nation] = response.info()['X-autologin']
+        except urllib.error.HTTPError:
+            print("Failed to login to " + fix(nation) + ". If you have changed its password, please re-add to login.json "
+                                                        "as a new nation.")
+        time.sleep(1)
+except TypeError:
+    pass
 
 # dump file
 if len(config['nations']) > 0 and fix(input("Do you want to encrypt the configuration file? (y/n) ")) == 'y':

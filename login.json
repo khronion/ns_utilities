@@ -1,8 +1,9 @@
 {
-    "encrypted": false,
-    "user_agent": "Your email or other identifier goes here",
+    "encrypted": {
+        "Nation": "ENCRYPTED LOGIN HASH"
+    },
+    "user_agent": "Khronion",
     "nations": {
-        "nation one": "password one",
-        "nation two": "password two"
+        "Nation": "Plaintext Login"
     }
 }

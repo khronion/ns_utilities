@@ -24,8 +24,12 @@ def fix(s):
     return s.lower().replace(" ", "_")
 
 
-with open('login.json', 'r') as cfg:
-    config = json.load(cfg)
+try:
+    with open('login.json', 'r') as cfg:
+        config = json.load(cfg)
+except json.decoder.JSONDecodeError:
+    input("Invalid JSON file! Hit ENTER to terminate.")
+    exit()
 
 query = "https://www.nationstates.net/cgi-bin/api.cgi?nation={}&q=ping"
 errors = False

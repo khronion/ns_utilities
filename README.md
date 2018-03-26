@@ -1,3 +1,5 @@
+**I am no longer developing any of my NationStates-related projects. Any individual may fork this codebase under the terms of the GNU General Public License, v. 3. Please see <http://www.gnu.org/licenses/> for details.**
+
 This is a repository for various one-off NationStates related python scripts. All scripts are written in Python 3 and are provided as-is under a GPLv3 license.
 
 # Endorsement Graph

@@ -65,7 +65,7 @@ try:
         # log into nation
         try:
             with urllib.request.urlopen(api_call) as response:
-                config['encrypted'][nation] = response.info()['X-autologin']
+                pass
         except urllib.error.HTTPError:
             print("Failed to login to " + fix(nation) + ". If you have changed its password, please re-add to login.json "
                                                         "as a new nation.")
